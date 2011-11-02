@@ -30,6 +30,15 @@ app.configure('production', function(){
 // Routes
 
 app.get('/', routes.index);
+app.get('/signup', routes.signup);
+app.get('/login', routes.login);
+app.get('/signin', routes.signin);
+
+app.post('/', function(req, res){
+  console.log(req.body.user);
+  console.log(req.query);
+  res.render('signin', { title: 'Sign In' });
+});
 
 app.listen(3000);
 console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);

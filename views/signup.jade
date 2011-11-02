@@ -1,0 +1,20 @@
+h1= title
+p Create New Account...
+form(method='post', action='/')
+  label
+    | User Name
+    input(name='user[name]')
+  p
+  label
+    | User Email
+    input(name='user[email]')
+  p
+  label
+    | Password&nbsp;&nbsp;
+    input(type='password',name='user[password]')
+  p
+  label
+    | Confirm&nbsp;&nbsp;
+    input(type='password',name='password_confirm')
+  p
+  input(type='submit', value='Regisiter')
