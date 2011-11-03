@@ -5,6 +5,7 @@
 
 var express = require('express')
   , routes = require('./routes')
+require('./models');
 
 var app = module.exports = express.createServer();
 
@@ -37,7 +38,7 @@ app.get('/signin', routes.signin);
 app.post('/', function(req, res){
   console.log(req.body.user);
   console.log(req.query);
-  res.render('signin', { title: 'Sign In' });
+  routes.signin(req,res);
 });
 
 app.listen(3000);
