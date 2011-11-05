@@ -1,7 +1,8 @@
 /*
  * GET home page.
  */
-
+  var model_name = 'UserAccount';
+  var coll_name = 'accounts';
 
 exports.index = function(req, res){
   res.render('index', { title: 'Cloud Note' })
@@ -17,8 +18,6 @@ exports.login = function(req, res){
 
 exports.signin = function(req, res){
   var mongoose = require('mongoose');
-  var model_name = 'UserAccount';
-  var coll_name = 'accounts';
   var USER  = mongoose.model(model_name, coll_name);
   var user = new USER();
   user.name = req.body.user.name;
@@ -33,6 +32,38 @@ exports.signin = function(req, res){
       res.render('signin', { title: 'Sign Ok', signed : true });
     }
       });
-  
-  
 };
+
+exports.logon = function(req, res){
+	var mongoose = require('mongoose');
+	var USER = mongoose.model(model_name, coll_name);
+	
+	USER.findOne( { name: req.body.user.name}, function( err, theUser ){
+		if ( err )
+		{
+		  console.error("db findOne error.");
+		  console.error(err);
+		}
+		else
+		{
+			if ( theUser == null ){
+				res.render('login', { title: 'Not Found User'});
+			}
+			else {
+				console.log ( 'password judge');
+				console.log ( theUser.password );
+				console.log ( req.body.user.password );
+				if ( theUser.password == req.body.user.password ){
+					res.render('main', { title : 'Login' , username : theUser.name } );
+				}else{
+					res.render('login', { title : 'Password wrong'});
+				}				
+			}
+		}
+	});	
+}
+
+exports.main = function(req, res){
+	res.render('main', { title : 'Not login', username : 'need login' } );
+}
+
