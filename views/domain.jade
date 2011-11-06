@@ -1,6 +1,6 @@
 h1= 'Domain Management'
 
-form(method='put', action='/domain')
+form(action='/domain', method='post')
   each domain, i in mydomains
     div
       label
@@ -13,5 +13,6 @@ form(method='put', action='/domain')
         | Domain #{j}:
         input(name='domains[n#{j}]')
   div
-    input(type='submit', value='Save')
+    button(type='submit')
+      |Save
   
