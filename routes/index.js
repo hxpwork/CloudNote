@@ -50,9 +50,6 @@ exports.logon = function(req, res){
 				res.render('login', { title: 'Not Found User'});
 			}
 			else {
-				console.log ( 'password judge');
-				console.log ( theUser.password );
-				console.log ( req.body.user.password );
 				if ( theUser.password == req.body.user.password ){
 					res.render('main', { title : 'Login' , username : theUser.name } );
 				}else{

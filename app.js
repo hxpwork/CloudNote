@@ -12,12 +12,13 @@ var app = module.exports = express.createServer();
 // Configuration
 
 app.configure(function(){
+	var RedisStore = require('connect-redis')(express);
   app.set('views', __dirname + '/views');
   app.set('view engine', 'jade');
   app.use(express.bodyParser());
   app.use(express.methodOverride());
   app.use(express.cookieParser());
-  app.use(express.session({ secret: "keyboard cat" }));
+  app.use(express.session({ secret: "keyboard cat", store: new RedisStore }));
   app.use(app.router);
   app.use(express.static(__dirname + '/public'));
 });
@@ -37,6 +38,7 @@ app.get('/signup', routes.signup);
 app.get('/login', routes.login);
 app.get('/signin', routes.signin);
 app.get('/main', routes.main);
+app.get('/domain', routes.domain);
 
 app.post('/signup', routes.signin);
 app.post('/login', routes.logon);

@@ -1,0 +1,17 @@
+h1= 'Domain Management'
+
+form(method='put', action='/domain')
+  each domain, i in mydomains
+    div
+      label
+        | Domain #{i}:
+        input(name='domains[n#{i}]', value='#{domain.name}')
+
+  - for( var j = mydomains.length; j < 8 ; j++ )
+    div
+      label
+        | Domain #{j}:
+        input(name='domains[n#{j}]')
+  div
+    input(type='submit', value='Save')
+  
