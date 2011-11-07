@@ -2,7 +2,7 @@ var knox = require('knox')
   , fs = require('fs');
 
 try {
-  var auth = { key : 'AKIAITGASHNZ4NTGR7MA', secret : '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', bucket : 'JasonNote' };
+  var auth = { key : 'AAA', secret : 'BBB', bucket : 'JasonNote' };
   var client = knox.createClient(auth);
   
 //  client.get('/').on('response', function(res){
