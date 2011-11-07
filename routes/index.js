@@ -117,3 +117,48 @@ function userDomainSet ( userDomain , domainName , index ){
 			userDomain.domains.push( { name : domainName } );
 	}
 }
+
+exports.category = function(req, res){
+	if ( req.session.user == null ){
+		res.render('login', { title: 'Need Login'});
+		return ;
+	}
+
+	var mongoose = require('mongoose');
+	var UserDomain = mongoose.model('UserDomain', 'domains');
+	UserDomain.findOne( { userid: req.session.user._id}, function( err, userDomain ){
+		var domains = {};
+		if ( userDomain )
+			domains = userDomain.domains;
+			res.render('category', {title:'Category Management', domains: domains});
+	});		
+}
+
+exports.categorySave = function(req, res){
+	console.log(req.body.domain.id);
+	console.log(req.body.category.name);
+	
+	var mongoose = require('mongoose');
+	var DomainCategory = mongoose.model('DomainCategory', 'categorys');
+	var dCategory = DomainCategory.findOne( { domainid : req.body.domain.id} , 
+		function( err, dcategory ){
+			if ( dcategory == null ){
+				dcategory = new DomainCategory();
+				dcategory.domainid = req.body.domain.id ;
+			}
+			dcategory.categorys.push({name:req.body.category.name, subs:null});
+
+			dcategory.save(function(err){
+				if ( err ){
+					console.error(err);
+				}else {
+					console.log('category create ok');
+				}
+				var UserDomain = mongoose.model('UserDomain', 'domains');
+				var domains = UserDomain.findOne( { userid: req.session.user._id}, function( err, userDomain ){
+  				  res.render('category', {title:'Category Management', domains: userDomain.domains});
+				});
+			});
+			
+	});
+}

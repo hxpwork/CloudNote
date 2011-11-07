@@ -1,0 +1,15 @@
+h1= title
+p Create New Category...
+form(method='post', action='/category')
+  label
+  | Domain:
+  select(name='domain[id]')
+    each item in domains
+      option(value='#{item._id}') 
+        #{item.name}
+  p
+  label 
+  | category name:
+  input(name='category[name]')
+  button(type='submit')
+      |Create New Category

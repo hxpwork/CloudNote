@@ -22,3 +22,14 @@ var UserDomain = new Schema({
    ,domains : [Domain]
 });
 mongoose.model('UserDomain', UserDomain, 'domains');
+
+var Category = new Schema({
+	name : String
+   ,subs : [Category]
+});
+
+var DomainCategory = new Schema({
+	domainid : Schema.ObjectId
+	,categorys : [Category]
+});
+mongoose.model('DomainCategory', DomainCategory, 'categorys');

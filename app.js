@@ -39,10 +39,12 @@ app.get('/login', routes.login);
 app.get('/signin', routes.signin);
 app.get('/main', routes.main);
 app.get('/domain', routes.domain);
+app.get('/category', routes.category);
 
 app.post('/signup', routes.signin);
 app.post('/login', routes.logon);
 app.post('/domain', routes.domainSave);
+app.post('/category', routes.categorySave);
 
 
 app.listen(3000);
