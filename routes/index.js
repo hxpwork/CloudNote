@@ -250,3 +250,89 @@ function noteSaveS3( note, content ){
 	  return;
 	}
 }
+
+exports.filenote = function(req, res){
+	if ( req.session.user == null ){
+		res.render('login', { title: 'Need Login'});
+		return ;
+	}
+	var mongoose = require('mongoose');
+	var UserDomain = mongoose.model('UserDomain', 'domains');
+	var Category = mongoose.model('Category', 'categorys');
+	
+	UserDomain.findOne( { userid: req.session.user._id}, 
+		function( err, userDomain ){
+			if ( err ) res.redirect('BACK');
+			
+			if ( userDomain && userDomain.domains && userDomain.domains.length > 0 ){
+				Category.find( { domainid : userDomain.domains[0]._id } , 
+				  function ( err, categorys ) {
+	  				  res.render('filenote', {title:'Create New File Note', domains: userDomain.domains, categorys : categorys});
+	  			});
+			}
+			else
+				res.redirect('BACK');
+	});
+}
+
+exports.filenoteSave = function(req,res,next){
+	var mongoose = require('mongoose');
+	var UserNote = mongoose.model('UserNote','notes');
+	var note = new UserNote();
+
+	console.log('wait file transfer complete..');
+	req.form.complete(function(err, fields, files){
+		console.log(fields.note);
+	    if (err) {
+	      console.log('upload file error');
+	      console.error(err);
+	    } else {
+	    	console.log('uplode file ok');
+	    	note.title = fields.title;
+	    	note.keyword = fields.keyword;
+	    	note.categoryid = fields.categoryid;
+	    	note.save(function(err){
+	    		if ( err ){
+	    			console.error('note save failed');
+	    			console.error(err);
+	    		}else {
+	    			console.log('note saved');
+	    		}
+	    		fileSaveS3(note, files);
+	    	});
+	    }
+	    exports.filenote(req, res);
+	});
+	req.form.on('progress', function(bytesReceived, bytesExpected){
+	    var percent = (bytesReceived / bytesExpected * 100) | 0;
+	    process.stdout.write('Uploading: %' + percent + '\r');
+	  });
+	console.log('form passsed');
+}
+
+function fileSaveS3(note, files){
+	var knox = require('knox')
+	  , fs = require('fs');
+
+	try {
+	  var authFile = fs.readFileSync('./auth', 'ascii');
+	  var auth = JSON.parse(authFile);
+	  var client = knox.createClient(auth);
+	  console.log(files);
+	  console.log(files.file.path);
+	  console.log('/'+note.categoryid+'/'+note._id);
+	  client.putFile(files.file.path, '/'+note.categoryid+'/'+note._id, function(err, res){
+	      if ( err ){
+	    	  console.log('putFile failed');
+	    	  console.error(err);
+	    	  return;
+	      }
+	      else {
+		      console.log(res);
+	      }
+	    });
+	} catch (err) {
+	  console.error(err);
+	  return;
+	}
+}

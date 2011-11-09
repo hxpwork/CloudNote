@@ -1,0 +1,25 @@
+h1= title
+
+form(method='post', action='/filenote', enctype='multipart/form-data')
+  label Domain:
+    select(name='domainid')
+      each domain in domains
+        option(value='#{domain._id}') 
+          #{domain.name}
+  label Category:
+  select(name='categoryid')
+    each cate in categorys
+      option(value='#{cate._id}') 
+        #{cate.name}
+  p
+  label Title:
+    input(name='title')
+  p
+  label Keyword:
+    input(name='keyword')
+  p
+  label file:
+    input(name='file', type='file')
+  p
+  button(type='submit')
+    |Save File Note
