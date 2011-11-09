@@ -139,26 +139,114 @@ exports.categorySave = function(req, res){
 	console.log(req.body.category.name);
 	
 	var mongoose = require('mongoose');
-	var DomainCategory = mongoose.model('DomainCategory', 'categorys');
-	var dCategory = DomainCategory.findOne( { domainid : req.body.domain.id} , 
+	var Category = mongoose.model('Category', 'categorys');
+	Category.findOne( { domainid : req.body.domain.id , name : req.body.category.name } , 
 		function( err, dcategory ){
-			if ( dcategory == null ){
-				dcategory = new DomainCategory();
+			if ( dcategory  ){
+//				var UserDomain = mongoose.model('UserDomain', 'domains');
+//				var domains = UserDomain.findOne( { userid: req.session.user._id}, function( err, userDomain ){
+//  				  res.render('category', {title:'Category Name Exist!', domains: userDomain.domains});
+//				});
+				res.redirect('BACK');
+				return;
+			}else {
+				dcategory = new Category();
 				dcategory.domainid = req.body.domain.id ;
-			}
-			dcategory.categorys.push({name:req.body.category.name, subs:null});
-
-			dcategory.save(function(err){
-				if ( err ){
-					console.error(err);
-				}else {
-					console.log('category create ok');
-				}
-				var UserDomain = mongoose.model('UserDomain', 'domains');
-				var domains = UserDomain.findOne( { userid: req.session.user._id}, function( err, userDomain ){
-  				  res.render('category', {title:'Category Management', domains: userDomain.domains});
+				dcategory.name = req.body.category.name ;
+				dcategory.sort = 0 ;
+	
+				dcategory.save(function(err){
+					if ( err ){
+						console.error(err);
+					}else {
+						console.log('category create ok');
+					}
+					Category.find( { domainid : req.body.domain.id } , 
+					  function ( err, categorys ) {
+						var UserDomain = mongoose.model('UserDomain', 'domains');
+						UserDomain.findOne( { userid: req.session.user._id}, function( err, userDomain ){
+		  				  res.render('category', {title:'Category Management', domains: userDomain.domains, categorys : categorys});
+						});
+		  			});
 				});
-			});
-			
+			}
 	});
+}
+
+exports.webnote = function(req,res){
+	if ( req.session.user == null ){
+		res.render('login', { title: 'Need Login'});
+		return ;
+	}
+	var mongoose = require('mongoose');
+	var UserDomain = mongoose.model('UserDomain', 'domains');
+	var Category = mongoose.model('Category', 'categorys');
+	
+	UserDomain.findOne( { userid: req.session.user._id}, 
+		function( err, userDomain ){
+			if ( err ) res.redirect('BACK');
+			
+			if ( userDomain && userDomain.domains && userDomain.domains.length > 0 ){
+				Category.find( { domainid : userDomain.domains[0]._id } , 
+				  function ( err, categorys ) {
+	  				  res.render('webnote', {title:'Create New Web Note', domains: userDomain.domains, categorys : categorys});
+	  			});
+			}
+			else
+				res.redirect('BACK');
+	});
+
+}
+
+exports.webnoteSave = function(req, res){
+	var mongoose = require('mongoose');
+	var UserNote = mongoose.model('UserNote','notes');
+	var note = new UserNote();
+	note.title = req.body.note.title;
+	note.keyword = req.body.note.keyword;
+	note.categoryid = req.body.category.id;
+	
+	note.save(function(err){
+		if ( err ){
+			console.error('note save failed');
+			console.error(err);
+		}else {
+			console.log('note saved');
+		}
+		noteSaveS3(note, req.body.note.content);
+		exports.webnote(req, res);
+	});
+}
+
+function noteSaveS3( note, content ){
+	var knox = require('knox')
+	  , fs = require('fs');
+
+	try {
+	  var authFile = fs.readFileSync('./auth', 'ascii');
+	  console.log('authFile read');
+	  console.log(authFile);
+	  var auth = JSON.parse(authFile);
+	  console.log("auth is:");
+	  console.log(auth);
+	  var client = knox.createClient(auth);
+	  console.log('create client');
+	  buf = new Buffer(content);
+	  var req = client.put('/'+note.categoryid+'/'+note._id, {
+		   'Content-Length': buf.length
+		   , 'Content-Type': 'text/plain'
+		   });
+	  req.on('response', function(res){
+		  console.log(res.statusCode);
+		  console.log(res.headers);
+		  res.on('data', function(chunk){
+		    console.log(chunk.toString());
+		  });
+	  });
+	  // Send the request with the file's Buffer obj
+	  req.end(buf);
+	} catch (err) {
+	  console.error(err);
+	  return;
+	}
 }

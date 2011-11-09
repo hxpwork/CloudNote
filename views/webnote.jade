@@ -1,0 +1,25 @@
+h1= title
+
+form(method='post', action='/webnote')
+  label Domain:
+    select(name='domain[id]')
+      each domain in domains
+        option(value='#{domain._id}') 
+          #{domain.name}
+  label Category:
+  select(name='category[id]')
+    each cate in categorys
+      option(value='#{cate._id}') 
+        #{cate.name}
+  p
+  label Title:
+    input(name='note[title]')
+  p
+  label Keyword:
+    input(name='note[keyword]')
+  p
+  label Content:
+    textarea(name='note[content]', rows=20, cols=80)
+  p
+  button(type='submit')
+    |Save Web Note

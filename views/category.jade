@@ -8,6 +8,13 @@ form(method='post', action='/category')
       option(value='#{item._id}') 
         #{item.name}
   p
+  label
+  | Category:
+  select(name='category[id]')
+    each cate in categorys
+      option(value='#{cate._id}') 
+        #{cate.name}
+  p
   label 
   | category name:
   input(name='category[name]')

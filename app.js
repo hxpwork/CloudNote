@@ -40,12 +40,13 @@ app.get('/signin', routes.signin);
 app.get('/main', routes.main);
 app.get('/domain', routes.domain);
 app.get('/category', routes.category);
+app.get('/webnote', routes.webnote);
 
 app.post('/signup', routes.signin);
 app.post('/login', routes.logon);
 app.post('/domain', routes.domainSave);
 app.post('/category', routes.categorySave);
-
+app.post('/webnote', routes.webnoteSave);
 
 app.listen(3000);
 console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);

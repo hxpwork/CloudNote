@@ -24,12 +24,18 @@ var UserDomain = new Schema({
 mongoose.model('UserDomain', UserDomain, 'domains');
 
 var Category = new Schema({
-	name : String
-   ,subs : [Category]
+	domainid : { type : Schema.ObjectId, index : true }
+	,parentid : Schema.ObjectId
+	,name : String
+	,childs : [Schema.ObjectId]
+	,sort : Number
 });
+mongoose.model('Category', Category, 'categorys');
 
-var DomainCategory = new Schema({
-	domainid : Schema.ObjectId
-	,categorys : [Category]
+var UserNote = new Schema({
+	categoryid : { type : Schema.ObjectId, index : true }
+	, title : String 
+	, keyword : String
 });
-mongoose.model('DomainCategory', DomainCategory, 'categorys');
+mongoose.model('UserNote', UserNote, 'notes');
+
