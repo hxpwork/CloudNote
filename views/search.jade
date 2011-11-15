@@ -1,0 +1,15 @@
+h1= 'Note Search'
+
+form(action='/search', method='post')
+  div
+    label 
+      |Key word: 
+      input(name='note[keyword]')
+  div
+    button(type='submit')
+      |Search
+
+each note in notes  
+  div
+    - var noteid = '/note/'+note._id ;
+    a(href='#{noteid}') #{note.title}

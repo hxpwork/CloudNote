@@ -336,3 +336,28 @@ function fileSaveS3(note, files){
 	  return;
 	}
 }
+
+exports.search = function(req, res){
+	res.render('search', {title:'Note Search', notes: {} } ); 
+}
+
+exports.searchNote = function(req, res){
+	
+	// { $or : [{keyword:/.*b2.*/i},{title:/.*aa.*/i}]}
+	var key = eval('/.*'+req.body.note.keyword+'.*/i');
+	var cd1 = { keyword :key }, cd2 = { title : key };
+	var query = { $or : [ cd1, cd2]};
+	
+	var mongoose = require('mongoose');
+	var UserNote = mongoose.model('UserNote','notes');
+	UserNote.find( query , function (err, notes) {
+		if ( err ){
+			console.error(err);
+			res.render('search', {title:'Note Search', notes: {} } ); 
+		}
+		else
+		{
+			res.render('search', {title:'Note Search', notes: notes } ); 
+		}
+	});
+}
