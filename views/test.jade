@@ -1,0 +1,8 @@
+h1= title
+form(method='post', action='/puttest')
+  input(name='_method', type='hidden', value='delete')
+  label
+    | User Name
+    input(name='user[name]')
+  p
+  input(type='submit', value='Put Test')

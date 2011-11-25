@@ -5,6 +5,7 @@
   var coll_name = 'accounts';
 
 exports.index = function(req, res){
+	console.log(process.env.NODE_ENV);
   res.render('index', { title: 'Cloud Note' })
 };
 
@@ -360,4 +361,13 @@ exports.searchNote = function(req, res){
 			res.render('search', {title:'Note Search', notes: notes } ); 
 		}
 	});
+}
+
+exports.puttest = function(req, res){
+	res.render('test', {title:'Put Test'} ); 
+}
+
+exports.putcome = function(req, res){
+	console.log('put come');
+	res.send( 'put received'); 
 }

@@ -54,5 +54,16 @@ app.post('/webnote', routes.webnoteSave);
 app.post('/filenote', routes.filenoteSave);
 app.post('/search', routes.searchNote);
 
+app.all('/puttest', function(req,res,next){
+	console.log('come all');
+	next();
+});
+app.get('/puttest', routes.puttest);
+app.put('/puttest', routes.putcome);
+app.del('/puttest', function(req,res,next){
+	console.log('come del');
+	res.send( 'del received'); 
+});
+
 app.listen(3000);
 console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
