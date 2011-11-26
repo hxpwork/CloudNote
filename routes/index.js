@@ -35,6 +35,31 @@ exports.signin = function(req, res){
       });
 };
 
+exports.phoneLogin = function(req, res){
+	var mongoose = require('mongoose');
+	var USER = mongoose.model(model_name, coll_name);
+	console.log('phone Login');
+	res.header('Access-Control-Allow-Origin','*');
+	USER.findOne( { name: req.params.user}, function( err, theUser ){
+		if ( err ){
+			
+			res.json({ back : "db findOne error."});
+		}
+		else{
+			if ( theUser == null ){
+				res.json({ back: 'Not Found User'});
+			}
+			else {
+				if ( theUser.password == req.params.password ){
+					res.json({ back : 'Login successful' } );
+				}else{
+					res.json({ back : 'Password wrong'});
+				}				
+			}
+		}
+			
+	});
+}
 exports.logon = function(req, res){
 	var mongoose = require('mongoose');
 	var USER = mongoose.model(model_name, coll_name);

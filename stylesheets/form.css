@@ -1,0 +1,140 @@
+fieldset {
+	border: none;
+	margin: 10px 0 20px 0; }
+	fieldset p {
+		clear: left;
+		margin: 0 0 10px 0; }
+		fieldset p label {
+			font-family: Arial, Helvetica, sans-serif;
+			font-size: 12px;
+			display: block; }
+		fieldset p span {
+			display: block;
+			background: #E9E9E9;
+			width: 460px;
+			padding: 4px; }
+			fieldset p span select,
+			fieldset p span input {
+				border: 1px solid #A7A7A7;
+				padding: 4px;
+				font-family: Arial, Helvetica, sans-serif;
+				font-size: 13px;
+				font-weight: bold;}
+			fieldset p span select {
+				padding: 3px 4px; }
+			fieldset p span input { width: 450px; }
+			fieldset p span select { width: 460px; }
+	fieldset option { color: #000000; font-weight: normal; }
+	fieldset optgroup {
+		color: #666666;
+		font-style: normal;
+		font-weight: bold; }
+		
+/* Signup Form
+--------------------*/
+fieldset#account-settings { }
+	fieldset#account-settings p label.company-name { }
+	fieldset#account-settings p label.time-zone { }
+	fieldset#account-settings p label.tick-url { }
+		fieldset#account-settings p label.tick-url b {
+			float: left;
+			line-height: 34px;
+			margin: 0 5px;
+			color: #000; }
+			fieldset#account-settings p label.tick-url b.note {
+				float: none;
+				line-height: auto;
+				color: #666666;
+				font-weight: normal; }
+		fieldset#account-settings p label.tick-url span {
+			width: 200px;
+			float: left; }
+			fieldset#account-settings p label.tick-url span input {
+				width: 190px; }
+			.check-availability {
+				float: left;
+				position: relative;
+				top: -5px;
+				left: 5px; }
+
+fieldset#admin-account { }
+	fieldset#admin-account p { float: left; }
+	fieldset#admin-account p label.first-name,
+	fieldset#admin-account p label.last-name {
+		width: 224px;
+		float: left; }
+	fieldset#admin-account p label.first-name span,
+	fieldset#admin-account p label.last-name span {
+		width: 206px; }
+		fieldset#admin-account p label.first-name span input,
+		fieldset#admin-account p label.last-name span input {
+			width: 196px; }
+	
+	fieldset#admin-account p label.email,
+	fieldset#admin-account p label.password {
+		width: 352px; }
+		fieldset#admin-account p label.email span,
+		fieldset#admin-account p label.password span {
+			width: 352px; }
+			fieldset#admin-account p label.email span input,
+			fieldset#admin-account p label.password span input {
+				width: 342px; }
+
+fieldset#billing-information { }
+	fieldset#billing-information p.postal {
+		float: left;
+		padding: 0 0 20px 0;
+		width: 500px;
+		border-bottom: 1px solid #E9E9E9; }
+		fieldset#billing-information p label.zip {
+			width: 110px;
+			float: left; }
+			fieldset#billing-information p label.zip span {
+				width: 93px; }
+				fieldset#billing-information p label.zip span input {
+					width: 83px; }
+		fieldset#billing-information p label.country {
+			width: 350px;
+			float: left; }
+			fieldset#billing-information p label.country span {
+				 	width: 350px;}
+				fieldset#billing-information p label.country span select {
+					width: 350px; }
+	fieldset#billing-information p.card-info {
+		float: left; }
+		fieldset#billing-information p.card-info label.card-number {
+			width: 204px;
+			float: left; }
+			fieldset#billing-information p.card-info label.card-number span {
+				width: 185px; }
+				fieldset#billing-information p.card-info label.card-number span input {
+					width: 175px; }
+		fieldset#billing-information p.card-info label.expiration-month {
+			width: 175px;
+			float: left; }
+			fieldset#billing-information p.card-info label.expiration-month span {
+				width: 170px; }
+				fieldset#billing-information p.card-info label.expiration-month span select {
+					width: 170px; }
+		fieldset#billing-information p.card-info label.expiration-year {
+			width: 81px;
+			float: left; }
+			fieldset#billing-information p.card-info label.expiration-year span {
+				width: 81px; }
+				fieldset#billing-information p.card-info label.expiration-year span select {
+					width: 81px; }
+	fieldset#billing-information p label.security-code {
+		clear: left;
+		background: url("../images/icon_security-code.gif") no-repeat 100px 20px; }
+		fieldset#billing-information p label.security-code span {
+			width: 90px; }
+			fieldset#billing-information p label.security-code span input {
+				width: 80px; }
+
+/* =Form Errors
+--------------------*/
+.field-with-errors {
+	background: #F5DC63 }
+	.field-with-errors input,
+	.field-with-errors select {
+		border: 1px solid #D29C34; }
