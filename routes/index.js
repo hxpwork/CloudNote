@@ -4,18 +4,14 @@
   var model_name = 'UserAccount';
   var coll_name = 'accounts';
 
+// { index page }
 exports.index = function(req, res){
-	console.log(process.env.NODE_ENV);
-  res.render('index', { title: 'Cloud Note' })
+  if ( req.session && req.session.user )
+	res.render('main', { title : 'Login' , username : req.session.user.name } );
+  else
+	res.redirect('/login');
 };
 
-exports.signup = function(req, res){
-  res.render('signup', { title: 'Sign Up' })
-};
-
-exports.login = function(req, res){
-  res.render('login', { title: 'Login' })
-};
 
 exports.signin = function(req, res){
   var mongoose = require('mongoose');
@@ -386,13 +382,4 @@ exports.searchNote = function(req, res){
 			res.render('search', {title:'Note Search', notes: notes } ); 
 		}
 	});
-}
-
-exports.puttest = function(req, res){
-	res.render('test', {title:'Put Test'} ); 
-}
-
-exports.putcome = function(req, res){
-	console.log('put come');
-	res.send( 'put received'); 
 }

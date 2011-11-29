@@ -43,10 +43,7 @@ app.configure(function(){
   app.use(express.session({ secret: "keyboard cat", store: new RedisStore }));
   app.use(app.router);
   
-  app.use(express.static(__dirname + '/public'));		
-  app.use("/images",express.static(__dirname + '/images'));
-  app.use("/javascripts",express.static(__dirname + '/javascripts'));
-  app.use("/stylesheets",express.static(__dirname + '/stylesheets'));
+  app.use(express.static(__dirname + '/public'));		// share /public on web
 });
 
 app.configure('development', function(){
@@ -61,49 +58,27 @@ app.configure('production', function(){
 // Routes
 
 app.get('/', jadeRoutes.index);
-app.get('/signup', function(req, res){
-    res.render('signup.html',{ layout: false });
-});
-app.post('/signup', function(req, res){
-    res.render('signup.html',{ layout: false });
-});
-//app.get('/login',  function(req, res){
-//    res.render('login.html',{ layout: false });
-//});
-//app.post('/login', function(req, res){
-//res.render('login.html',{ layout: false });
-//});
+
+function _to(filename){
+	return function(req, res){ res.render(filename,{layout: false });};
+}
+app.get('/signup', _to('signup.html'));
+app.post('/signup', _to('signup.html'));
+app.get('/login',  _to('login.html'));
+app.post('/login', _to('login.html'));
 
 app.get('/signin', 		jadeRoutes.signin);
 app.get('/main', 		jadeRoutes.main);
 app.get('/domain', 		jadeRoutes.domain);
-app.get('/category', 	jadeRoutes.category);
-app.get('/webnote', 	jadeRoutes.webnote);
-app.get('/filenote', 	jadeRoutes.filenote);
-app.get('/search', 		jadeRoutes.search);
-
-
 app.post('/domain', 	jadeRoutes.domainSave);
+app.get('/category', 	jadeRoutes.category);
 app.post('/category', 	jadeRoutes.categorySave);
+app.get('/webnote', 	jadeRoutes.webnote);
 app.post('/webnote', 	jadeRoutes.webnoteSave);
+app.get('/filenote', 	jadeRoutes.filenote);
 app.post('/filenote', 	jadeRoutes.filenoteSave);
+app.get('/search', 		jadeRoutes.search);
 app.post('/search', 	jadeRoutes.searchNote);
-
-
-/**
- * app.all and http verb put/delete test
- * 
- */
-//app.all('/puttest', function(req,res,next){
-//	console.log('come all');
-//	next();
-//});
-//app.get('/puttest', routes.puttest);
-//app.put('/puttest', routes.putcome);
-//app.del('/puttest', function(req,res,next){
-//	console.log('come del');
-//	res.send( 'del received'); 
-//});
 
 // from phone 
 app.get('/phoneLogin/:user/:password', jadeRoutes.phoneLogin);
