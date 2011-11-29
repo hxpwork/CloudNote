@@ -249,7 +249,7 @@ function noteSaveS3( note, content ){
 	  , fs = require('fs');
 
 	try {
-	  var authFile = fs.readFileSync('./auth', 'ascii');
+	  var authFile = fs.readFileSync('./certs/auth', 'ascii');
 	  console.log('authFile read');
 	  console.log(authFile);
 	  var auth = JSON.parse(authFile);

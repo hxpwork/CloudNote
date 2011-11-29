@@ -1,3 +1,2 @@
-auth
-key.pem
-cert.pem
+.gitignore
+certs/auth
