@@ -5,7 +5,8 @@
 
 var express = require('express')
   , routes = require('./routes')
-  , form = require('connect-form');
+  , form = require('connect-form')
+  , lingua = require('lingua');
 
 require('./models');
 
@@ -14,15 +15,26 @@ var app = module.exports = express.createServer(form({ keepExtensions: true }));
 // Configuration
 
 app.configure(function(){
-	var RedisStore = require('connect-redis')(express);
+  var RedisStore = require('connect-redis')(express);
+  app.register(".html", require("jqtpl").express);
   app.set('views', __dirname + '/views');
   app.set('view engine', 'jade');
+  // app.set("view engine", "html");
+
+
+  
+  // Lingua configuration
+  app.use(lingua(app, { defaultLocale: 'en', path: __dirname + '/i18n' }));
+    
   app.use(express.bodyParser());
   app.use(express.methodOverride());
   app.use(express.cookieParser());
   app.use(express.session({ secret: "keyboard cat", store: new RedisStore }));
   app.use(app.router);
   app.use(express.static(__dirname + '/public'));
+  app.use("/images",express.static(__dirname + '/images'));
+  app.use("/javascripts",express.static(__dirname + '/javascripts'));
+  app.use("/stylesheets",express.static(__dirname + '/stylesheets'));
 });
 
 app.configure('development', function(){
@@ -36,8 +48,12 @@ app.configure('production', function(){
 // Routes
 
 app.get('/', routes.index);
-app.get('/signup', routes.signup);
-app.get('/login', routes.login);
+app.get('/signup', function(req, res){
+    res.render('signup.html',{ layout: false });
+});
+app.get('/login',  function(req, res){
+    res.render('login.html',{ layout: false });
+});
 app.get('/signin', routes.signin);
 app.get('/main', routes.main);
 app.get('/domain', routes.domain);
@@ -46,8 +62,12 @@ app.get('/webnote', routes.webnote);
 app.get('/filenote', routes.filenote);
 app.get('/search', routes.search);
 
-app.post('/signup', routes.signin);
-app.post('/login', routes.logon);
+app.post('/signup', function(req, res){
+    res.render('signup.html',{ layout: false });
+});
+app.post('/login', function(req, res){
+    res.render('login.html',{ layout: false });
+});
 app.post('/domain', routes.domainSave);
 app.post('/category', routes.categorySave);
 app.post('/webnote', routes.webnoteSave);
