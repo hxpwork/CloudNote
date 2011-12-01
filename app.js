@@ -6,8 +6,8 @@
 var express = require('express')			// express.js
   , lingua = require('lingua')				// i18n handle
   , load_models = require('./models')		// mongodb models load
-  , jadeRoutes = require('./routes');		// load jade routes
-  
+  , jadeRoutes = require('./routes') 		// load jade routes
+  , checks = require('./routes/checks.js'); // load route check
 /**
  * Start https server
  * 
@@ -57,15 +57,15 @@ app.configure('production', function(){
 
 // Routes
 
-app.get('/', jadeRoutes.index);
+app.get('/', checks.checkSession, jadeRoutes.index);
 
 function _to(filename){
 	return function(req, res){ res.render(filename,{layout: false });};
 }
-app.get('/signup', _to('signup.html'));
-app.post('/signup', _to('signup.html'));
-app.get('/login',  _to('login.html'));
-app.post('/login', _to('login.html'));
+app.all('/login',  _to('login.html'));
+app.all('/signup', _to('signup.html'));
+app.post('/checkLogin', checks.checkLogin);
+
 
 app.get('/signin', 		jadeRoutes.signin);
 app.get('/main', 		jadeRoutes.main);

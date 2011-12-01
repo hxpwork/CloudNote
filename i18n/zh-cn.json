@@ -1,7 +1,23 @@
 {
   "login":{
     "title":"CloudNote &raquo; 登录",
-    "subtitle":"CloudNote 登录"
+    "subtitle":"CloudNote 登录",
+    "signup":"需要一个账号? 在",
+    "signuphere":"这里注册",
+    "forget":"忘记了密码?",
+    "shame":"这真让人郁闷 - 不要紧。只要输入你的邮件地址，我们会为您发送密码。",
+    "emailaddr":"邮箱地址",
+    "emailholder":"输入你的邮箱地址",
+    "oops":"喔 - ",
+    "ioops":"我忘记了密码",
+    "pwd":"密码",
+    "pwdholder":"输入密码",
+    "remdays":"保留登录状态30天",
+    "emailpwd":"将密码发送到我的邮箱",
+    "kidding":"只是开玩笑 ",
+    "remnow":"我现在记得密码了",
+    "dberror":"数据库访问异常",
+    "invalid":"用户名或密码无效"
   },
   "index":{
     "welcome":"欢迎来到 "

@@ -9,55 +9,55 @@
     <script src="javascripts/dragdrop.js" type="text/javascript"></script>
     <script src="javascripts/controls.js" type="text/javascript"></script>
     <script src="javascripts/application.js" type="text/javascript"></script>
+    <script type="text/javascript">
+
+    </script>
 </head>
 <body id="login" onload="document.login_form.user_login.focus();">
     <div id="sitewrapper">
-        <div id="header">
-        </div>
-        <!-- /header -->
+        <header>
+        </header>
         <div id="content">
             <div id="main">
                 <div id="forgot-password-flash" class="flash bad" style="display: none;">
                     <div class="inner">
-                        <h3>
-                            Did you forget your password?</h3>
-                        Shame shame shame... Not really - It's actually no problem at all. Just enter your
-                        email in the box below and we'll reset it for you.
+                        <h3>${lingua.login.forget}</h3>
+                        ${lingua.login.shame}
                     </div>
                 </div>
                 <h1>
                    ${lingua.login.subtitle}</h1>
-                <h2>Need an account? Sign up <a href="signup">here</a></h2>
+                <h2>${lingua.login.signup} <a href="signup">${lingua.login.signuphere}</a></h2>
                 <form action="/login" method="post" name="login_form">
                 <div id="email">
                     <fieldset id="user-email">
                         <p>
                             <label>
-                                Email address<span><input type="text" name="user_login" tabindex="1" /></span></label>
+                                ${lingua.login.emailaddr}<span><input type="email" id="user[email]" name="user[email]" tabindex="1" required="required" placeholder='${lingua.login.emailholder}' /></span></label>
                         </p>
                     </fieldset>
                 </div>
                 <div id="password">
                     <fieldset id="user-password">
                         <p>
-                            <strong>Oops - <a href="#" onclick="forgot_password(); return false;">I forgot my password</a></strong>
+                            <strong>${lingua.login.oops}<a href="#" onclick="forgot_password(); return false;">${lingua.login.ioops}</a></strong>
                             <label>
-                                Password<span><input type="password" name="user_password" tabindex="2" /></span></label>
+                                ${lingua.login.pwd}<span><input type="password" id="user[password]" name="user[password]" tabindex="2" required="required" placeholder='${lingua.login.pwdholder}' /></span></label>
                         </p>
                     </fieldset>
                     <p>
                         <label id="remember-password">
                             <input name="remember[password]" type="hidden" value="" /><input checked="checked"
                                 id="remember_password" name="remember[password]" type="checkbox" value="1" />
-                            Remember me for 30 days</label>
+                            ${lingua.login.remdays}</label>
                         <input type="image" id="sign-in" name="login" src="/images/btn_sign-in.gif" alt="Sign In"
-                            tabindex="3" />
+                             tabindex="3" />
                     </p>
                 </div>
                 <div id="forgot-password" style="display: none;">
-                    <input name="commit" type="submit" value="Email me my password" />
+                    <input name="commit" type="submit" value="${lingua.login.emailpwd}" />
                     <label>
-                        Just kidding <a href="#" onclick="remember(); return false;">I remember now</a></label>
+                        ${lingua.login.kidding}<a href="#" onclick="remember(); return false;">${lingua.login.remnow}</a></label>
                 </div>
                 </form>
             </div>
@@ -66,6 +66,32 @@
         <!-- /content -->
         <script type="text/javascript">
 //<![CDATA[
+    $('sign-in').observe('click', signinClick, false);
+
+	function signinClick(event) {
+	  	var element = event.element();
+	  	if ( !checkAllValid() )
+	  		return;
+	  	var pars = '';
+		pars += 'user[email]=' + $('user[email]').getValue();
+		pars += '&user[password]=' + $('user[password]').getValue();
+	  	new Ajax.Request('checkLogin',
+	  		  {
+	  		    method:'post',
+	  		    parameters: pars, 
+	  		    onSuccess: function(transport, json){
+	  		      var response = transport.responseText.evalJSON() ;
+	  		      alert(response.result);
+	  		    },
+	  		    onFailure: function(){ alert('Something went wrong...') }
+	  		  });
+	  	Event.stop(event);
+	}
+	
+	function checkAllValid(){
+		return $('user[email]').checkValidity()  
+			 & $('user[password]').checkValidity();
+	}
 
             function forgot_password() {
                 new Effect.BlindUp('password', { duration: 0.15 });
@@ -75,10 +101,7 @@
                     new Effect.BlindDown('forgot-password-flash', { duration: 0.15 });
                 }, 350);
             }
-//]]>
-        </script>
-        <script type="text/javascript">
-//<![CDATA[
+
 
             function remember() {
                 new Effect.BlindUp('forgot-password', { duration: 0.15 });

@@ -6,10 +6,7 @@
 
 // { index page }
 exports.index = function(req, res){
-  if ( req.session && req.session.user )
 	res.render('main', { title : 'Login' , username : req.session.user.name } );
-  else
-	res.redirect('/login');
 };
 
 

@@ -341,6 +341,9 @@ fieldset {
 
 	/* =Sitewrapper -> Header
 	--------------------*/
+	#sitewrapper header {
+	   width: 990px;
+	   padding-top: 40px; }
 	#sitewrapper #header {
 	   width: 990px;
 	   padding-top: 40px; }

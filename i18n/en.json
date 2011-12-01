@@ -1,7 +1,23 @@
 {
   "login":{
     "title":"CloudNote &raquo; Login",
-    "subtitle":"CloudNote sign in"
+    "subtitle":"CloudNote sign in",
+    "signup":"Need an account? Sign up",
+    "signuphere":"here",
+    "forget":"Did you forget your password?",
+    "shame":"Shame shame shame... Not really - It's actually no problem at all. Just enter your email in the box below and we'll reset it for you.",
+    "emailaddr":"Email address",
+    "emailholder":"input your email address",
+    "oops":"Oops - ",
+    "ioops":"I forgot my password",
+    "pwd":"Password",
+    "pwdholder":"input password",
+    "remdays":"Remember me for 30 days",
+    "emailpwd":"Email me my password",
+    "kidding":"Just kidding ",
+    "remnow":"I remember now",
+    "dberror":"db connect error.",
+    "invalid":"user or password invalid."
   },
   "index":{
     "welcome":"Weclome to "
