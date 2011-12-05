@@ -47,15 +47,18 @@
                     </fieldset>
                     <p>
                         <label id="remember-password">
-                            <input name="remember[password]" type="hidden" value="" /><input checked="checked"
-                                id="remember_password" name="remember[password]" type="checkbox" value="1" />
-                            ${lingua.login.remdays}</label>
+                            <input name="remember[password]" type="hidden" value="" />
+                            <input checked="checked" id="user[keepSession]" name="user[keepSession]" 
+                                type="checkbox" value="1" />${lingua.login.remdays}</label>
                         <input type="image" id="sign-in" name="login" src="/images/btn_sign-in.gif" alt="Sign In"
                              tabindex="3" />
                     </p>
+                    <p>
+                    	<div id="login-tips" style='color:orange'></div>
+                    </p>
                 </div>
                 <div id="forgot-password" style="display: none;">
-                    <input name="commit" type="submit" value="${lingua.login.emailpwd}" />
+                    <input id='email-pwd' name="commit" type="submit" value="${lingua.login.emailpwd}" />
                     <label>
                         ${lingua.login.kidding}<a href="#" onclick="remember(); return false;">${lingua.login.remnow}</a></label>
                 </div>
@@ -67,6 +70,24 @@
         <script type="text/javascript">
 //<![CDATA[
     $('sign-in').observe('click', signinClick, false);
+    $('email-pwd').observe('click', emailPassword, false);
+    
+    function emailPassword(event) {
+    	var element = event.element();
+    	var pars = 'user[email]=' + $('user[email]').getValue();
+    	
+    	new Ajax.Request('emailPassword',
+    			{
+		  		    method:'get',
+		  		    parameters: pars, 
+		  		    onSuccess: function(transport, json){
+		  		      var response = transport.responseText.evalJSON() ;
+		  		      alert(response.result);
+		  		    },
+		  		    onFailure: function(){ loginTip('Something went wrong...'); }
+		  		});
+    	Event.stop(event);
+    }
 
 	function signinClick(event) {
 	  	var element = event.element();
@@ -75,17 +96,26 @@
 	  	var pars = '';
 		pars += 'user[email]=' + $('user[email]').getValue();
 		pars += '&user[password]=' + $('user[password]').getValue();
+		pars += '&user[keepSession]=' + $('user[keepSession]').checked ;
 	  	new Ajax.Request('checkLogin',
 	  		  {
 	  		    method:'post',
 	  		    parameters: pars, 
 	  		    onSuccess: function(transport, json){
 	  		      var response = transport.responseText.evalJSON() ;
-	  		      alert(response.result);
+	  		      if ( response.result == 'ok')
+	  		    	window.location = "/index";
+	  		      else
+	  		      	loginTip(response.result);
 	  		    },
-	  		    onFailure: function(){ alert('Something went wrong...') }
+	  		    onFailure: function(){ loginTip('Something went wrong...'); }
 	  		  });
 	  	Event.stop(event);
+	}
+	
+	function loginTip(tip){
+		$('login-tips').innerHTML = tip;
+		window.setTimeout( function(){ $('login-tips').innerHTML = ''; }, 3000);
 	}
 	
 	function checkAllValid(){
@@ -93,24 +123,24 @@
 			 & $('user[password]').checkValidity();
 	}
 
-            function forgot_password() {
-                new Effect.BlindUp('password', { duration: 0.15 });
-                setTimeout(function () {
-                    ;
-                    new Effect.BlindDown('forgot-password', { duration: 0.15 });
-                    new Effect.BlindDown('forgot-password-flash', { duration: 0.15 });
-                }, 350);
-            }
+    function forgot_password() {
+        new Effect.BlindUp('password', { duration: 0.15 });
+        setTimeout(function () {
+            ;
+            new Effect.BlindDown('forgot-password', { duration: 0.15 });
+            new Effect.BlindDown('forgot-password-flash', { duration: 0.15 });
+        }, 350);
+    }
 
 
-            function remember() {
-                new Effect.BlindUp('forgot-password', { duration: 0.15 });
-                new Effect.BlindUp('forgot-password-flash', { duration: 0.15 });
-                setTimeout(function () {
-                    ;
-                    new Effect.BlindDown('password', { duration: 0.15 });
-                }, 350);
-            }
+    function remember() {
+        new Effect.BlindUp('forgot-password', { duration: 0.15 });
+        new Effect.BlindUp('forgot-password-flash', { duration: 0.15 });
+        setTimeout(function () {
+            ;
+            new Effect.BlindDown('password', { duration: 0.15 });
+        }, 350);
+    }
 //]]>
         </script>
     </div>

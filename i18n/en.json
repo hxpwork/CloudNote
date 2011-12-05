@@ -1,6 +1,6 @@
 {
   "login":{
-    "title":"CloudNote &raquo; Login",
+    "title":"CloudNote Login",
     "subtitle":"CloudNote sign in",
     "signup":"Need an account? Sign up",
     "signuphere":"here",
@@ -17,7 +17,13 @@
     "kidding":"Just kidding ",
     "remnow":"I remember now",
     "dberror":"db connect error.",
-    "invalid":"user or password invalid."
+    "invalid":"user or password invalid.",
+    "invalidEmail":"the email address not exists",
+    "autoChangePwdFaild":"failed on generate new password",
+    "emailSendFail":"send new password mail failed",
+    "pwdEmailSubject":"CloudNote password change notify",
+    "pwdEmailBodyHeader":"new password :",
+    "pwdEmailSendOk":"new password has sent to your mailbox"
   },
   "index":{
     "welcome":"Weclome to "

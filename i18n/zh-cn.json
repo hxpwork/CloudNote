@@ -1,6 +1,6 @@
 {
   "login":{
-    "title":"CloudNote &raquo; 登录",
+    "title":"CloudNote 登录",
     "subtitle":"CloudNote 登录",
     "signup":"需要一个账号? 在",
     "signuphere":"这里注册",
@@ -17,7 +17,13 @@
     "kidding":"只是开玩笑 ",
     "remnow":"我现在记得密码了",
     "dberror":"数据库访问异常",
-    "invalid":"用户名或密码无效"
+    "invalid":"用户名或密码无效",
+    "invalidEmail":"提供的邮箱不存在",
+    "autoChangePwdFaild":"在产生新密码时发生错误",
+    "emailSendFail":"发生密码邮件时发生错误",
+    "pwdEmailSubject":"CloudNote密码变更通知",
+    "pwdEmailBodyHeader":"新密码 :",
+    "pwdEmailSendOk":"新密码已经发送到您的邮箱"
   },
   "index":{
     "welcome":"欢迎来到 "

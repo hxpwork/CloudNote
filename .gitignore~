@@ -1,1 +1,4 @@
-auth
+.gitignore
+certs/auth
+logs
+logs/*
