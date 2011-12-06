@@ -25,6 +25,42 @@
     "pwdEmailBodyHeader":"new password :",
     "pwdEmailSendOk":"new password has sent to your mailbox"
   },
+  "signup":{
+    "title":"CloudNote Sign up",
+    "haveaccount":"Have an account? ",
+    "loginhere":"Login here.",
+    "thankyou":"Thank you for trying CloundNote. ",
+    "tryingtick":"Just fill out the form below and we'll get you right in.",
+    "whatiscloudnote":"What is CloudNote?",
+    "whatiscloudnote_answer":"You can use it to save your note by many terminals, such as phone, pad, pc...",
+    "accsetting":"Account settings",
+    "emailaddr":"Email address ",
+    "createpassword":"Create the account password",
+    "password":"password ",
+    "confirmpassword":"confirm password ",
+    "n1":"Your account is ",
+    "n2":"FREE",
+    "n3":". We can only support ",
+    "n4":"50M",
+    "n5":" space for one account. ",  
+    "n6":" If you use our cloud storage space, we ",
+    "n7":"not",
+    "n8":" promiss the data that saved in the storage never lost! Or you can choose save data to ",
+    "n9":"yourself",
+    "n10":" cloud storage. ",
+    "agree":"I understand and agree",
+    "agreebutton":"Place this order & create my CloudNote account",
+    "memo":"CloudNote is a open source project. You can find source code in ",
+    "memoback":".",
+    "validEmail":"good email address",
+    "invalidEmail":"exist same email, pleas change",
+    "pwdlen":"password len must >= 4",
+    "pwddiff":"confirm password different with password",
+    "createFailed":"failed on create account"
+  },
+  "errors":{
+  	"dberror":"db connect error."
+  },
   "index":{
     "welcome":"Weclome to "
   }

@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>CloudNote &raquo; Sign up</title>
+    <title>${lingua.signup.title}</title>
     <link rel="stylesheet" media="screen" type="text/css" href="stylesheets/whitespace-reset.css" />
     <link rel="stylesheet" media="screen" type="text/css" href="stylesheets/signup.css" />
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
@@ -15,78 +15,175 @@
     <div id="sitewrapper">
         <div id="header">
             <div id="global-nav">
-                Have an account? <a href="/login">Login here.</a></div>
+                 ${lingua.signup.haveaccount}<a href="/login">${lingua.signup.loginhere}</a></div>
             <br />
         </div>
         <div id="eye">
             <div id="intro">
                 <h1 id="trying-tick">
-                    <strong>Thank you for trying CloundNote. </strong>Just fill out the form below and
-                    we'll get you right in.</h1>
+                    <strong>${lingua.signup.thankyou}</strong>${lingua.signup.tryingtick}</h1>
                 
             </div>
         </div>
         <dl id="sidebar">
-            <dt>What is CloudNote?</dt>
+            <dt>${lingua.signup.whatiscloudnote}</dt>
             <dd>
-                You can use it to save your note by many terminals, such as phone, pad, pc...</dd>
+                ${lingua.signup.whatiscloudnote_answer}</dd>
         </dl>
         <div id="main" class="signup">
             <h4>
-                Account settings</h4>
+                ${lingua.signup.accsetting}</h4>
             <form action="/subscribe" method="post">
             <fieldset id="admin-account">
                 <p>
                     <label class="email">
-                        Email address <span id="owner_email_span">
-                            <input id="owner_email" name="owner[email]" size="30" type="text" /></span>
+                        ${lingua.signup.emailaddr}<span id="owner_email_span">
+                            <input id="owner[email]" name="owner[email]" size="30" type="email" required="required" /></span>
+                        <span id="owner_email_cr" ></span>   
                     <script type="text/javascript">
 //<![CDATA[
-                        new Form.Element.Observer('owner_email', 0.5, function (element, value) { new Ajax.Updater('availability', '/subscribe/check_email', { asynchronous: true, evalScripts: true, onComplete: function (request) { Element.hide('url_loading') }, onLoading: function (request) { Element.show('url_loading'); Element.hide('url-icon') }, parameters: 'url=' + encodeURIComponent(value) }) })
+            $('owner[email]').observe('blur', emailCheck, false);
+            function emailCheck(event) {
+            	emailTip('');
+            	var element = event.element();
+            	if ( !$('owner[email]').checkValidity() )
+            		return ;
+            	var pars = 'owner[email]=' + $('owner[email]').getValue();
+
+            	new Ajax.Request('checkEmail',
+            			{
+        		  		    method:'post',
+        		  		    parameters: pars, 
+        		  		    onSuccess: function(transport, json){
+        		  		      var response = transport.responseText.evalJSON() ;
+        		  		      emailTip(response.result);
+        		  		    },
+        		  		    onFailure: function(){ emailTip('Something went wrong...'); }
+        		  		});
+            }
+            
+            function emailTip(tip){
+        		$('owner_email_cr').innerHTML = tip;
+        	}
 //]]>
                     </script>                    
                     </label>
                 </p>
             </fieldset>
             <h4>
-                Create the account password</h4>
+                ${lingua.signup.createpassword}</h4>
             <fieldset id="admin-account">
                 <p>
                     <label class="email">
-                        password <span id="owner_email_span">
-                            <input id="owner_first_name" name="owner[password]" size="30" type="password" /></span>
+                        ${lingua.signup.password}<span id="owner_email_span">
+                            <input id="owner[password]" name="owner[password]" size="30" type="password" required="required" /></span>
+                        	<span id="owner_pwd_cr"></span>
                     </label>
+                    <script type="text/javascript">
+//<![CDATA[
+            $('owner[password]').observe('blur', function(event){
+            	pwdTip('');
+            	if ( !$('owner[password]').checkValidity() )
+            		return ;
+            	if ( $('owner[password]').getValue().length < 4 )
+            		pwdTip('${lingua.signup.pwdlen}');
+            });
+            
+            function pwdTip(tip){
+        		$('owner_pwd_cr').innerHTML = tip;
+        	}
+//]]>
+                    </script> 
                     <label class="email">
-                        confirm password <span id="owner_last_name_span">
-                            <input id="owner_last_name" name="owner[last_name]" size="30" type="password" /></span>
+                        ${lingua.signup.confirmpassword}<span id="owner_last_name_span">
+                            <input id="owner[confirm]" name="owner[confirm]" size="30" type="password" required="required" /></span>
+                    		<span id="owner_confirm_cr"></span>
                     </label>
+                    <script type="text/javascript">
+//<![CDATA[
+            $('owner[confirm]').observe('blur', function(event){
+            	confirmTip('');
+            	if ( !$('owner[confirm]').checkValidity() )
+            		return ;
+            	if ( $('owner[confirm]').getValue() != $('owner[password]').getValue() )
+            		confirmTip('${lingua.signup.pwddiff}');
+            });
+            
+            function confirmTip(tip){
+        		$('owner_confirm_cr').innerHTML = tip;
+        	}
+//]]>
+                    </script>                     
                 </p>
 
             </fieldset>
             <script type="text/javascript">
 //<![CDATA[
                 function enableSubmit(checkbox) {
-                    $("submit").disabled = !checkbox.checked
+                    $("signup_account").disabled = !checkbox.checked
                 }
 //]]>
             </script>
             <div id="agreement-box">
                 <div id="agreement">
-                    <h4 id="hdr_agreement">
-                        Accept the agreement &amp; create your account</h4>
                     <p>
-                        Your account is <strong>FREE</strong>. We can only support <strong>50M</strong> space for one account. </p>
+                        ${lingua.signup.n1}<strong>${lingua.signup.n2}</strong>${lingua.signup.n3}<strong>${lingua.signup.n4}</strong>${lingua.signup.n5}</p>
                     <p>
-                        If you use our cloud storage space, we <strong>not</strong> promiss the data that saved in the storage never lost! Or you can choose save data to <strong>yourself</strong> cloud storage. </p>
+                        ${lingua.signup.n6}<strong>${lingua.signup.n7}</strong>${lingua.signup.n8}<strong>${lingua.signup.n9}</strong>${lingua.signup.n10}</p>
                     <input id="accept_agreement" name="accept_agreement" onclick="enableSubmit(this)"
                         type="checkbox" value="1" />
                     <label for="accept_agreement">
-                        <strong>I understand and agree</strong></label>
+                        <strong>${lingua.signup.agree}</strong></label>
                     <div id="create-account">
-                        <input name="submit" disabled="disabled" type="submit" id="submit" value="Place this order &amp; create my CloudNote account" />
+                        <input name="signup_account" disabled="disabled" type="submit" id="signup_account" value="${lingua.signup.agreebutton}" />
                     </div>
+                    <div id="signup-tips"  style='color:orange'></div>
                 </div>
             </div>
+            <script type="text/javascript">
+//<![CDATA[
+            $('signup_account').observe('click', signupClick, false);    
+            
+            function signupClick(event) {
+        	  	var element = event.element();
+        	  	if ( !checkAllValid() )
+        	  		return;
+         
+        	  	var pars = '';
+        		pars += 'owner[email]=' + $('owner[email]').getValue();
+        		pars += '&owner[password]=' + $('owner[password]').getValue();
+        		pars += '&owner[confirm]=' + $('owner[confirm]').getValue();
+
+        	  	new Ajax.Request('signupAccount',
+        	  		  {
+        	  		    method:'post',
+        	  		    parameters: pars, 
+        	  		    onSuccess: function(transport, json){
+        	  		      var response = transport.responseText.evalJSON() ;
+        	  		      if ( response.result == 'ok'){
+        	  		    	window.location = "/login";
+        	  		      }
+        	  		      else
+        	  		      	signupTip(response.result);
+        	  		    },
+        	  		    onFailure: function(){ signupTip('Something went wrong...'); }
+        	  		  });
+        	  	
+        	  	Event.stop(event);
+        	}
+            
+        	function checkAllValid(){
+        		return $('owner[email]').checkValidity()  
+        		     & $('owner[password]').checkValidity()
+        			 & $('owner[confirm]').checkValidity();
+        	}
+        	
+        	function signupTip(tip){
+        		$('signup-tips').innerHTML = tip;
+        		window.setTimeout( function(){ $('signup-tips').innerHTML = ''; }, 3000);
+        	}
+//]]>
+            </script>
             </form>
         </div>
         <div class="clear">
@@ -94,6 +191,6 @@
         </div>
     </div>
     <p id="footer">
-        CloudNote is a open source project. You can find source code in <a href="https://github.com/hxpwork/CloudNote">github</a>.</p>
+        ${lingua.signup.memo}<a href="https://github.com/hxpwork/CloudNote">github</a>${lingua.signup.memoback}</p>
 </body>
 </html> 

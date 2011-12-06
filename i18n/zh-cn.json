@@ -25,6 +25,42 @@
     "pwdEmailBodyHeader":"新密码 :",
     "pwdEmailSendOk":"新密码已经发送到您的邮箱"
   },
+  "signup":{
+    "title":"CloudNote 注册",
+    "haveaccount":"已经有账户？",
+    "loginhere":"这里登录。",
+    "thankyou":"感谢尝试CoundNote! ",
+    "tryingtick":"只要填写下面表格即可获得账户。",
+    "whatiscloudnote":"CloudNote是什么？",
+    "whatiscloudnote_answer":"你可以用CloudNote来保存你的笔记，并在多种终端设备上都可以支持，包括电话，电脑，平板等等。",
+    "accsetting":"账户设置",
+    "emailaddr":"邮箱地址 ",
+    "createpassword":"建立账户密码",
+    "password":"密码 ",
+    "confirmpassword":"密码确认 ",
+    "n1":"你的账户是 ",
+    "n2":"免费的",
+    "n3":"。我们只为每一个账户提供",
+    "n4":"50M",
+    "n5":" 空间。",  
+    "n6":" 如果你使用我们提供的云存储空间，我们 ",
+    "n7":"不",
+    "n8":" 保证数据永不丢失！或者你可以选择将数据保存在 ",
+    "n9":"你自己的",
+    "n10":" 云存储中。",
+    "agree":"我理解并同意条款",
+    "agreebutton":"确认条款 并 建立我的CloudNote账户",
+    "memo":"CloudNote是一个开源项目。源码可以在 ",
+    "memoback":"找到。",
+    "validEmail":"有效邮箱",
+    "invalidEmail":"存在同名邮箱，请修改",
+    "pwdlen":"密码长度必须大于4",
+    "pwddiff":"密码确认与密码不一致",
+    "createFailed":"创建账户时失败"
+  },
+  "errors":{
+  	"dberror":"数据库连接错误。"
+  },
   "index":{
     "welcome":"欢迎来到 "
   }

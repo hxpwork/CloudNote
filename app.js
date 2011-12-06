@@ -26,6 +26,7 @@ var express = require('express')			// express.js
  */
 var app = module.exports = express.createServer(); 
 var logfile = fs.createWriteStream('logs/' +(new Date()).toDateString()+ '.log', {flags:'a'});
+global.logger = logfile;
 
 // Configuration
 
@@ -73,6 +74,9 @@ app.all('/login',  _to('login.html'));
 app.all('/signup', _to('signup.html'));
 app.post('/checkLogin', checks.checkLogin);
 app.get('/emailPassword', checks.checkEmailPwd);
+app.post('/checkEmail', checks.checkEmailValid);
+app.post('/signupAccount', checks.checkSignup);
+app.get('/account', _to('account_manage.html'));	
 
 app.get('/signin', 		jadeRoutes.signin);
 app.get('/main', 		jadeRoutes.main);

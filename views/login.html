@@ -93,6 +93,7 @@
 	  	var element = event.element();
 	  	if ( !checkAllValid() )
 	  		return;
+ 
 	  	var pars = '';
 		pars += 'user[email]=' + $('user[email]').getValue();
 		pars += '&user[password]=' + $('user[password]').getValue();
@@ -105,11 +106,14 @@
 	  		      var response = transport.responseText.evalJSON() ;
 	  		      if ( response.result == 'ok')
 	  		    	window.location = "/index";
+	  		      else if ( response.result == 'account')
+	  		    	window.location = "/account";
 	  		      else
 	  		      	loginTip(response.result);
 	  		    },
 	  		    onFailure: function(){ loginTip('Something went wrong...'); }
 	  		  });
+	  	
 	  	Event.stop(event);
 	}
 	

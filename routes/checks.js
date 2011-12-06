@@ -27,7 +27,7 @@ exports.checkLogin = function(req,res,next){
 	// now use 'POST' verb --> req.body.user.email
 
 	var lingua = res.lingua.content;
- 
+    
 	USER.findOne( { email : req.body.user.email } , function( err, theUser ){
 		if ( err ){
 			res.json({ result : lingua.login.dberror});
@@ -39,9 +39,12 @@ exports.checkLogin = function(req,res,next){
 			return;
 		}
 
-		if ( theUser.password == req.body.user.password ){
+		if ( theUser.password == sha1NewPassword( req.body.user.password ) ){
 			loginSessionSave( req, theUser, req.body.user.keepSession);
-			res.json({ result : 'ok' } );
+			if ( needAccountManage(theUser) )
+				res.json({result:'account'});
+			else
+				res.json({ result : 'ok' } );
 		}else{
 			res.json({ result : lingua.login.invalid });
 		}				
@@ -62,8 +65,8 @@ exports.checkEmailPwd = function(req,res,next){
 			res.json({ result : lingua.login.invalidEmail });
 		}
 		else {
-			var newPwd = String(Math.round(Math.random()*100000000));
-			theUser.password = generateNewPassword(newPwd) ;
+			var newPwd = generateNewPassword();
+			theUser.password = sha1NewPassword(newPwd) ;
 			theUser.save(function(err){
 				if ( err ){
 					res.json({ result: lingua.login.autoChangePwdFaild });
@@ -86,6 +89,75 @@ exports.checkEmailPwd = function(req,res,next){
 	});
 }
 
+exports.checkEmailValid = function(req,res,next){
+	var lingua = res.lingua.content;
+	
+	USER.findOne( { email : req.body.owner.email } , function( err, theUser ){
+		if ( err ){
+			res.json({ result : lingua.errors.dberror});
+			return;
+		}
+	
+		if ( theUser == null ){
+			res.json({ result : lingua.signup.validEmail });
+		}
+		else {
+			res.json({ result : lingua.signup.invalidEmail });
+		}
+	});
+}
+
+exports.checkSignup = function(req,res,next){
+	var lingua = res.lingua.content;
+	
+	USER.findOne( { email : req.body.owner.email } , function( err, theUser ){
+		if ( err ){
+			res.json({ result : lingua.errors.dberror});
+			return;
+		}
+	
+		if ( theUser == null ){
+			if ( req.body.owner.password.length < 4 ){
+				res.json({ result : lingua.signup.pwdlen });
+				return ;
+			}
+			if ( req.body.owner.password != req.body.owner.confirm ){
+				res.json({ result : lingua.signup.pwddiff});
+				return ;
+			}
+			
+			createNewAccount( lingua, res, req.body.owner.email, req.body.owner.password );
+		}
+		else {
+			res.json({ result : lingua.signup.invalidEmail });
+		}
+	});
+}
+
+function needAccountManage( user ){
+	if ( user.name == user.email )
+		return true;
+	return false;
+}
+
+function createNewAccount ( lingua, res, email, password ){
+	var user = new USER();
+	user.email = email;
+	user.name = email;
+	user.password = sha1NewPassword(password);
+	user.save(function(err) {
+	    if (err) {
+	      res.json({ result : lingua.signup.createFailed });
+	    }else{
+	      res.json({result:'ok'});
+	    }
+	});
+}
+
+function generateNewPassword(){
+	return String(Math.round(Math.random()*100000000));
+}
+
 function passwordChangeEmailSend( mailto , subject, body , callback ){
 	var email = require("mailer");	
 	var fs = require("fs");
@@ -106,7 +178,7 @@ function passwordChangeEmailSend( mailto , subject, body , callback ){
 	    }, callback );
 }
 
-function generateNewPassword(newPwd){
+function sha1NewPassword(newPwd){
 	var shasum = crypto.createHash('sha1');
 	shasum.update(newPwd);
 	return String(shasum.digest('hex'));
