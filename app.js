@@ -76,14 +76,16 @@ app.post('/checkLogin', checks.checkLogin);
 app.get('/emailPassword', checks.checkEmailPwd);
 app.post('/checkEmail', checks.checkEmailValid);
 app.post('/signupAccount', checks.checkSignup);
-app.get('/account', _to('account_manage.html'));	
+app.get('/account', checks.checkSession, _to('account_manage.html'));	
 
+//app.get('/category', _to('category.html'));
+app.get('/category', 	jadeRoutes.category);
+app.post('/category', 	jadeRoutes.categorySave);
 app.get('/signin', 		jadeRoutes.signin);
 app.get('/main', 		jadeRoutes.main);
 app.get('/domain', 		jadeRoutes.domain);
 app.post('/domain', 	jadeRoutes.domainSave);
-app.get('/category', 	jadeRoutes.category);
-app.post('/category', 	jadeRoutes.categorySave);
+
 app.get('/webnote', 	jadeRoutes.webnote);
 app.post('/webnote', 	jadeRoutes.webnoteSave);
 app.get('/filenote', 	jadeRoutes.filenote);

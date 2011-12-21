@@ -1,1 +1,119 @@
-this is account manage
+<!DOCTYPE html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>${lingua.signup.title}</title>
+    <link rel="stylesheet" media="screen" type="text/css" href="stylesheets/whitespace-reset.css" />
+    <link rel="stylesheet" media="screen" type="text/css" href="stylesheets/signup.css" />
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+    <script src="javascripts/prototype.js" type="text/javascript"></script>
+    <script src="javascripts/effects.js" type="text/javascript"></script>
+    <script src="javascripts/dragdrop.js" type="text/javascript"></script>
+    <script src="javascripts/controls.js" type="text/javascript"></script>
+    <script src="javascripts/application.js" type="text/javascript"></script>
+</head>
+<body>
+    <div id="sitewrapper">
+        <div id="header">
+        </div>
+        <div id="eye">
+            <div id="intro">
+                <h1 id="trying-tick">
+                    You can manificate your account info.
+				</h1>
+            </div>
+        </div>
+        <dl id="sidebar">
+            <dt>How to upgrade your info security?</dt>
+            <dd>
+                Use certificate to lock your storage register info.
+            </dd>
+        </dl>
+        <div id="main" class="signup">
+            <h4>
+                Account manificate</h4>
+            <form action="/subscribe" method="post">
+            <fieldset id="admin-account">
+            	<p>
+                    <label class="email">
+                        user name: <span id="owner_email_span">
+                            <input id="user[name]" name="user[name]" size="30" type="text" required="required" /></span>
+                        <span id="user_email_cr" ></span>   
+                    </label>
+                </p>
+                <p>
+                    <label class="email">
+                        email address: <span id="owner_email_span">
+                            <input id="user[email]" name="user[email]" size="30" type="email" required="required" /></span>
+                        <span id="user_email_cr" ></span>   
+                    </label>
+                </p>
+                <p>
+                    <label class="email">
+                        new password: <span id="owner_email_span">
+                            <input id="user[newpassword]" name="user[newpassword]" size="30" type="password" /></span>
+                        <span id="user_newpassword_cr" ></span>   
+                    </label>
+                </p>
+                <p>
+                    <label class="email">
+                        confirm password: <span id="owner_email_span">
+                            <input id="user[confirm]" name="user[confirm]" size="30" type="password" /></span>
+                        <span id="user_confirm_cr" ></span>   
+                    </label>
+                </p>
+            </fieldset>
+            <h4>
+                Storage settings</h4>
+            <fieldset id="admin-account">
+                <p>
+                    <label class="email">
+                        storage choose: <span id="owner_storage_choose_span">
+                        	<radio /></span>
+                        	<span id="owner_storage_choose_cr"></span>
+                    </label>
+                </p>
+                <div id="storages">
+                	<p>
+                		<label class="email">
+                        	storage types: <span id="owner_storage_types_span">
+                            <select id="user[stroage_types]">
+                              <option checked>S3</option>
+                            </select>
+                            </span>
+                    		<span id="owner_storage_types_cr"></span>
+                    	</label>
+                	</p>
+                	<p>
+                		<label class="email">
+                        	storage types: <span id="owner_storage_types_span">
+                            <select id="user[stroage_types]">
+                              <option checked>S3</option>
+                            </select>
+                            </span>
+                    		<span id="owner_storage_types_cr"></span>
+                    	</label>
+                	</p>
+                	<p>
+                	</p>
+				</div>
+            </fieldset>
+          
+            <div id="agreement-box">
+                <div id="agreement">
+                    <div id="create-account">
+                        <input name="save_account" type="submit" id="save_account" value="save changes" />
+                    </div>
+                    <div id="save-tips"  style='color:orange'></div>
+                </div>
+            </div>
+            
+            </form>
+        </div>
+        <div class="clear">
+            <!--&nbsp; -->
+        </div>
+    </div>
+    <p id="footer">
+        ${lingua.signup.memo}<a href="https://github.com/hxpwork/CloudNote">github</a>${lingua.signup.memoback}</p>
+</body>
+</html> 

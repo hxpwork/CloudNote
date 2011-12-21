@@ -1,22 +1,146 @@
-h1= title
-p Create New Category...
-form(method='post', action='/category')
-  label
-  | Domain:
-  select(name='domain[id]')
-    each item in domains
-      option(value='#{item._id}') 
-        #{item.name}
-  p
-  label
-  | Category:
-  select(name='category[id]')
-    each cate in categorys
-      option(value='#{cate._id}') 
-        #{cate.name}
-  p
-  label 
-  | category name:
-  input(name='category[name]')
-  button(type='submit')
-      |Create New Category
+!!! 5
+html
+  head
+    title= title
+    script(src='javascripts/jquery.js')
+    script(src='javascripts/jquery.cookie.js')
+    script(src='javascripts/jquery.cookie.js')
+    script(src='javascripts/jquery.jstree.js')
+  body
+    h1= title
+    p Create New Category...
+    form(method='post', action='/category')
+      label
+      | Domain:
+      select(name='domain[id]')
+        each item in domains
+          option(value='#{item._id}') 
+            #{item.name}
+        
+      #demo1.demo.jstree.jstree-0.jstree-focused.jstree-default
+        ul.jstree-no-dots.jstree-no-icons
+          li#phtml_1.jstree-closed
+            ins.jstree-icon &nbsp;
+            a(href='#') 
+              ins.jstree-icon &nbsp;
+              | Root node 1
+            ul
+              li#phtml_2.jstree-leaf
+                ins.jstree-icon &nbsp;
+                a(href='#') 
+                  ins.jstree-icon &nbsp;
+                  | Child node 1
+              li#phtml_3.jstree-last.jstree-leaf
+                a(href='#') 
+                  ins.jstree-icon &nbsp;
+                  | Child node 2
+          li#phtml_4.jstree-last.jstree-leaf
+            a(href='#') 
+              ins.jstree-icon &nbsp;
+              | Root node 2
+      p
+      #demo2
+  script.
+    $(function () {
+      $("#toggle_dots, #toggle_icons").click(function () { 
+        $("#demo1").jstree(this.value);
+      });
+      $("#set_theme1").click(function () { 
+        $("#demo1").jstree("set_theme","apple");
+      });
+      $("#set_theme2").click(function () { 
+        $("#demo1").jstree("set_theme","default");
+      });
+      $("#demo1").jstree({ 
+        "themes" : {
+            "theme" : "classic",
+            "dots" : true,
+            "icons" : true
+        },
+        "plugins" : [ "themes", "html_data" ]
+      });
+    });
+    
+    $(function () {
+      $("#demo2")
+        .jstree({
+          "json_data" : {
+              "data" : [
+                  {
+                      "data" : "A node",
+                      "metadata" : { "id" : 23, "title" : "a node" },
+                      "children" : [ 
+                           { 
+                              "data" : "Child 1" ,
+                              "metadata" : { id : 24 },
+                              "children" : [ "jason 1" , "jason 2" ]
+                           },
+                           "A Child 2" 
+                      ]
+                  },
+                  {
+                      "attr" : { "id" : "li.node.id1" },
+                      "data" : {
+                          "title" : "Long format demo",
+                          "attr" : { "href" : "#" }
+                      }
+                  }
+              ]
+          },
+          "contextmenu" : {
+          "items" : {
+                "create" : {
+                    "separator_before"	: false,
+                    "separator_after"	: true,
+                    "label"				: "新建",
+                    "action"			: function (obj) { this.create(obj); }
+                },
+                "rename" : {
+                    "separator_before"	: false,
+                    "separator_after"	: false,
+                    "label"				: "重命名",
+                    "action"			: function (obj) { this.rename(obj); }
+                },
+                "remove" : {
+                    "separator_before"	: false,
+                    "icon"				: false,
+                    "separator_after"	: false,
+                    "label"				: "Delete",
+                    "action"			: function (obj) { if(this.is_selected(obj)) { this.remove(); } else { this.remove(obj); } }
+                },
+                "ccp" : {
+                    "separator_before"	: true,
+                    "icon"				: false,
+                    "separator_after"	: false,
+                    "label"				: "Edit",
+                    "action"			: false,
+                    "submenu" : { 
+                        "cut" : {
+                            "separator_before"	: false,
+                            "separator_after"	: false,
+                            "label"				: "Cut",
+                            "action"			: function (obj) { this.cut(obj); }
+                        },
+                        "copy" : {
+                            "separator_before"	: false,
+                            "icon"				: false,
+                            "separator_after"	: false,
+                            "label"				: "Copy",
+                            "action"			: function (obj) { this.copy(obj); }
+                        },
+                        "paste" : {
+                            "separator_before"	: false,
+                            "icon"				: false,
+                            "separator_after"	: false,
+                            "label"				: "Paste",
+                            "action"			: function (obj) { this.paste(obj); }
+                        }
+                    }
+                }
+            }},
+          "plugins" : [ "themes", "json_data", "ui" , "contextmenu" , "crrm" , "cookies" , "dnd" ]
+        })
+        .bind("select_node.jstree", function (e, data) {  alert(data.rslt.obj.data("title")+' '+data.rslt.obj.attr("id")); })
+        .delegate("a", "click", function (event, data) { event.preventDefault(); })
+        ;
+    });

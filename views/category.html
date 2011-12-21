@@ -1,0 +1,61 @@
+<!DOCTYPE html
+PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>jsTree &raquo; Demo </title>
+	<meta name="title" content="jsTree - jQuery tree plugin - Demo" />
+	
+<script type="text/javascript" src="javascripts/jquery.js"></script>
+<script type="text/javascript" src="javascripts/jquery.cookie.js"></script>
+<script type="text/javascript" src="javascripts/jquery.hotkeys.js"></script>
+<script type="text/javascript" src="javascripts/jquery.jstree.js"></script>
+
+	</head>
+<body  >
+<div style="height: 343px;" id="demo1" class="demo jstree jstree-0 jstree-focused jstree-default">
+  <ul class="jstree-no-dots jstree-no-icons">
+    <li class="jstree-closed" id="phtml_1">
+      <ins class="jstree-icon">&nbsp;</ins>
+      <a href="#"><ins class="jstree-icon">&nbsp;</ins>Root node 1</a>
+      <ul>
+		<li class="jstree-leaf" id="phtml_2">
+		  <ins class="jstree-icon">&nbsp;</ins>
+		  <a href="#"><ins class="jstree-icon">&nbsp;</ins>Child node 1</a>
+		</li>
+		<li class="jstree-last jstree-leaf" id="phtml_3">
+		  <ins class="jstree-icon">&nbsp;</ins>
+		  <a href="#"><ins class="jstree-icon">&nbsp;</ins>Child node 2</a>
+		</li>
+	  </ul>
+	</li>
+	<li class="jstree-last jstree-leaf" id="phtml_4">
+	  <ins class="jstree-icon">&nbsp;</ins>
+	  <a href="#"><ins class="jstree-icon">&nbsp;</ins>Root node 2</a>
+	</li>
+  </ul>
+</div>
+
+<script type="text/javascript" class="source">
+$(function () {
+	$("#toggle_dots, #toggle_icons").click(function () { 
+		$("#demo1").jstree(this.value);
+	});
+	$("#set_theme1").click(function () { 
+		$("#demo1").jstree("set_theme","apple");
+	});
+	$("#set_theme2").click(function () { 
+		$("#demo1").jstree("set_theme","default");
+	});
+	$("#demo1").jstree({ 
+		"themes" : {
+			"theme" : "apple",
+			"dots" : true,
+			"icons" : true
+		},
+		"plugins" : [ "themes", "html_data" ]
+	});
+});
+</script>
+</body>
